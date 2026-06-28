@@ -1,0 +1,12 @@
+work/
+.nextflow/
+.nextflow.log*
+results/
+*.fastq
+*.fastq.gz
+*.bam
+*.bai
+*.vcf
+*.vcf.gz
+Miniconda3-latest-Linux-x86_64.sh
+fastq/
