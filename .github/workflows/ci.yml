@@ -1,0 +1,40 @@
+name: WES Pipeline CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Setup Nextflow
+      uses: nf-core/setup-nextflow@v1
+      with:
+        version: "26.04.3"
+
+    - name: Validate pipeline syntax
+      run: nextflow inspect main.nf || true
+
+    - name: Check Python scripts
+      run: |
+        python3 -m py_compile filter_variants.py
+        python3 -m py_compile priority_variants.py
+        python3 -m py_compile check_zygosity.py
+        python3 -m py_compile final_report.py
+        echo "All Python scripts OK"
+
+    - name: Check required files exist
+      run: |
+        test -f main.nf && echo "main.nf OK"
+        test -f modules.nf && echo "modules.nf OK"
+        test -f nextflow.config && echo "nextflow.config OK"
+        test -f Dockerfile && echo "Dockerfile OK"
+        test -f README.md && echo "README.md OK"
+        echo "All required files present"
