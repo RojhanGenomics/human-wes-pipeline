@@ -50,3 +50,13 @@ Variants are filtered by:
 
 ## Author
 Mahdieh — PhD Genetics
+
+## nf-core/sarek Integration Note
+
+Attempted integration with nf-core/sarek v3.9.0 (dev branch).
+
+**Finding:** Nextflow v26 introduced breaking changes in config syntax that affect all stable releases of sarek (v3.2.3 through v3.6.0). The dev branch partially works but contains a SENTIEON_BWAMEM process collision bug when using local reference files.
+
+**Workaround:** Custom pipeline built from scratch using individual biocontainers (FASTP, BWA-MEM, SAMTOOLS, GATK) with equivalent functionality to sarek germline variant calling workflow.
+
+**Status:** Monitoring nf-core/sarek for Nextflow v26 compatibility fix.
